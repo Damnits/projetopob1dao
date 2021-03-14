@@ -10,7 +10,6 @@ import modelo.Video;
 public class DAOVideo extends DAO<Video> {
 	public Video read (Object chave) {
 		String link = (String) chave;	//casting para o tipo da chave
-
 		Query q = manager.query();
 		q.constrain(Video.class);
 		q.descend("link").constrain(link);

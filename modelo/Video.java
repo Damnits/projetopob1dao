@@ -24,6 +24,15 @@ public class Video {
 	public void adicionar(Assunto a) {
 		assuntos.add(a);
 	}
+
+	public double getMedia() {
+		return media;
+	}
+
+	public void setMedia(double media) {
+		this.media = media;
+	}
+
 	public void adicionar(Visualizacao vis) {
 		visualizacoes.clear();
 		visualizacoes.add(vis);

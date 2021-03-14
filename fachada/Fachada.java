@@ -68,11 +68,32 @@ public class Fachada {
 		int idatual = maiorId(email);
 		idatual++;
 		Visualizacao v = new Visualizacao(idatual, nota, usuario, video);
+		usuario.adicionar(v);
 		video.adicionar(v);
+		AtualizarMediaVideo(nota, link);
+		daousuario.update(usuario);
 		daovideo.update(video);
 		daovisualizacao.create(v);
 		DAO.commit();
 		return v;
+	}
+	public static void AtualizarMediaVideo(int nota, String link)throws Exception {
+		DAO.begin();
+		if (nota>5 || nota<0){
+			DAO.rollback();
+			throw new Exception("Valor da nota maior que 5 ou menor que 0");
+		}
+		Video v =  daovideo.read(link);
+		if(v.getVisualizacoes().isEmpty()){
+			v.setMedia(nota);
+		}
+		else{
+			double media = v.getMedia() + nota/v.getVisualizacoes().size();
+			v.setMedia(media);
+		}
+		daovideo.update(v);
+		DAO.commit();
+
 	}
 	public static void apagarVisualizacao(int id)throws Exception{
 		DAO.begin();

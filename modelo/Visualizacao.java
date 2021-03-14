@@ -43,7 +43,7 @@ public class Visualizacao {
 		return "Visualizacao [id=" + id +
 				", datahora=" + datahora +
 				", nota=" + nota +
-				"\n usuario=" + usuario+ ", video=" + video.getNome() + "]";
+				"\n usuario=" + usuario.getEmail()+ ", video=" + video.getNome() + "]";
 	}
 
 }
