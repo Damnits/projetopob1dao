@@ -15,7 +15,7 @@ public class Consultar {
             System.out.println(Fachada.consultarVideoPorUsuario("Test3@ifpb.com"));
 
 
-            System.out.println(Fachada.consultarUsuariosPorVideo("https://www.youtube.com/watch?v=5z0-WWjk_Jc"));
+            System.out.println(Fachada.consultarUsuariosPorVideo("youtube.com/lol"));
 
 
 

@@ -22,19 +22,17 @@ public class Fachada {
 	}	
 	public static Video cadastrarVideo(String link, String nome, String palavra) throws Exception {
 		DAO.begin();
-
 		Video v = daovideo.read(link);
 		if(v != null) {
 			DAO.rollback();
 			throw new Exception("Link cadastrado: " + link);
 		}
-		
+		v = new Video(link, nome);
 		Assunto a = daoassunto.read(palavra);
 		if(a == null) {
 			adicionarAssunto(v, palavra);
-			a = daoassunto.read(a);
+			a = daoassunto.read(palavra);
 		}
-		v = new Video(link, nome);
 		v.adicionar(a);
 		daovideo.create(v);
 		DAO.commit();
@@ -153,21 +151,27 @@ public class Fachada {
 		DAO.begin();
 		Video v = daovideo.read(titulo);
 		if (v==null) {
-			throw new Exception("Alterar titulo do Video - filme inexistente:" + titulo);
+			DAO.rollback();
+			throw new Exception("Alterar titulo do Video - video inexistente:" + titulo);
 		}
 		v.setNome(novotitulo);
-		v = daovideo.update(v);
+		daovideo.update(v);
 		DAO.commit();
 	}
 
 	public static void alterarAssunto(String assunto, String novoassunto) throws Exception{
 		DAO.begin();
+		if (daoassunto.read(novoassunto)!=null){
+			DAO.rollback();
+			throw new Exception("Assunto novo já existente");
+		}
 		Assunto a = daoassunto.read(assunto);
 		if (a==null) {
+			DAO.rollback();
 			throw new Exception("Alterar Assunto do Video - Assunto inexistente:" + assunto);
 		}
 		a.setPalavra(novoassunto);
-		a = daoassunto.update(a);
+		daoassunto.update(a);
 		DAO.commit();
 	}
 

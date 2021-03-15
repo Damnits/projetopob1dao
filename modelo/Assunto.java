@@ -21,10 +21,7 @@ public class Assunto {
 	
 	@Override
 	public String toString() {
-		String texto = "Assunto [palavra=" + palavra;
-		for(Video v : videos) {
-			texto += v.getNome();
-		}
+		String texto = "Assunto :" + palavra;
 		return texto;
 	}
 
